@@ -1,0 +1,22 @@
+{
+  "name": "hendry-skills",
+  "owner": {
+    "name": "Kai Hendry",
+    "email": "hendry+skills@iki.fi"
+  },
+  "metadata": {
+    "description": "Kai Hendry's skills",
+    "version": "0.0.1"
+  },
+  "plugins": [
+    {
+      "name": "github-skills",
+      "description": "Collection of Github related skills",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./actions-optimiser"
+      ]
+    }
+  ]
+}
