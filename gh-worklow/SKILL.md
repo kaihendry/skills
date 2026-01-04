@@ -1,19 +1,17 @@
 ---
 name: Github Workflow Debugger
 allowed-tools: "Read,Bash(gh:*)"
-description: How to fix Github's CI/CD with the gh cli
-author: "Kai Hendry <hendry@iki.fi>"
-license: "MIT"
+description: How to fetch logs from Github's CI/CD with the gh cli
 ---
 
-Github worklows found in `.github/workflows/` are critical CI/CD steps to build
-/ test / deploy the project and they should not fail.
+Github worklows found in `.github/workflows/` define critical CI/CD steps to
+build / test / deploy the project and they should not fail.
 
 Since the repository might be private, the best way to view Github managed
 workflows is via the Github cli, which should be pre-installed and available as
 `gh`.
 
-# Listing latest runs
+** Step 1: List latest runs
 
 A run should start from the moment a new commit is pushed, but in practice it
 can take several seconds and again you need to wait until a workflow is run to
@@ -23,10 +21,32 @@ get a complete picture (often minutes!).
 
 Doc: `gh run ls --help`
 
-# Failed runs
+To know when the workflow is done:
+
+    gh run watch <ID> --exit-status
+
+** Step 2: Verify latest commit corresponds to the latest run
+
+    gh run view 20694127680 --json headSha -q '.headSha[:7]'
+
+Should be the same as
+
+    git describe --always
+
+Else warn the user hasn't pushed the current change?
+
+** Step 2: Failed runs
 
 To zoom into failed runs:
 
     gh run view 20383733266 --log-failed
 
 Doc: `gh run view --help`
+
+** Step 3: Plan and fix the issue
+
+AskUserQuestionTool for any clarifications
+
+# Workflow syntax errors
+
+Use `actionlint` to debug broken workflows.
