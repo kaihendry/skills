@@ -35,7 +35,7 @@ Should be the same as
 
 Else warn the user hasn't pushed the current change?
 
-** Step 2: Failed runs
+** Step 3: Debug errors
 
 To zoom into failed runs:
 
@@ -43,9 +43,9 @@ To zoom into failed runs:
 
 Doc: `gh run view --help`
 
-** Step 3: Plan and fix the issue
+** Step 4: Plan and fix the issue
 
-AskUserQuestionTool for any clarifications
+AskUserQuestionTool for any clarifications and whether to `git push` to kick off another workflow iteration.
 
 # Workflow syntax errors
 
