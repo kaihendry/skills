@@ -28,5 +28,5 @@ respository is https://github.com/hashicorp/setup-terraform. Study the README.md
 
 ## 4. Plan for optimisations
 
-How can the Github worklow be better? Assume we want to use the latest version of the actions and
+How can the Github workflow be better? Assume we want to use the latest version of the actions and
 try keep to the defaults, though find & explore novel yet succinct usages from Github search.

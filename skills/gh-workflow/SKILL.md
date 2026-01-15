@@ -49,7 +49,7 @@ Doc: `gh run view --help`
 
 ## Step 4: Plan and fix the issue
 
-AskUserQuestionTool for any clarifications and whether to `git push` to kick off another workflow iteration.
+AskUserQuestion for any clarifications and whether to `git push` to kick off another workflow iteration.
 
 # Workflow syntax errors
 

@@ -6,13 +6,18 @@
   },
   "metadata": {
     "description": "Kai Hendry's skills",
-    "version": "0.0.6"
+    "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "github-skills",
       "description": "Collection of Github related skills",
-      "source": "./plugins/github-skills"
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/actions-optimiser",
+        "./skills/gh-workflow"
+      ]
     }
   ]
 }
