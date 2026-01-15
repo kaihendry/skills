@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Kai Hendry's skills",
-    "version": "0.0.4"
+    "version": "0.0.5"
   },
   "plugins": [
     {
@@ -15,8 +15,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./actions-optimiser",
-        "./gh-workflow"
+        "./skills/actions-optimiser",
+        "./skills/gh-workflow"
       ]
     }
   ]
