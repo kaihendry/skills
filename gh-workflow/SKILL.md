@@ -4,7 +4,7 @@ allowed-tools: "Read,Bash(gh:*)"
 description: How to fetch logs from Github's CI/CD with the gh cli
 ---
 
-Github worklows found in `.github/workflows/` define critical CI/CD steps to
+Github workflows found in `.github/workflows/` define critical CI/CD steps to
 build / test / deploy the project and they should not fail.
 
 Engineers typically share URLs like: https://github.com/$REPO/actions/runs/$RUN_ID/job/$JOB_ID, to view this log:
@@ -15,7 +15,7 @@ Since the repository might be private, the best way to view Github managed
 workflows is via the Github cli, which should be pre-installed and available as
 `gh`.
 
-** Step 1: List latest runs
+## Step 1: List latest runs
 
 A run should start from the moment a new commit is pushed, but in practice it
 can take several seconds and again you need to wait until a workflow is run to
@@ -29,7 +29,7 @@ To know when the workflow is done:
 
     gh run watch $RUN_ID --exit-status
 
-** Step 2: Verify latest commit corresponds to the latest run
+## Step 2: Verify latest commit corresponds to the latest run
 
     gh run view $RUN_ID --json headSha -q '.headSha[:7]'
 
@@ -39,7 +39,7 @@ Should be the same as
 
 Else warn the user hasn't pushed the current change?
 
-** Step 3: Debug errors
+## Step 3: Debug errors
 
 To zoom into failed runs:
 
@@ -47,7 +47,7 @@ To zoom into failed runs:
 
 Doc: `gh run view --help`
 
-** Step 4: Plan and fix the issue
+## Step 4: Plan and fix the issue
 
 AskUserQuestionTool for any clarifications and whether to `git push` to kick off another workflow iteration.
 
