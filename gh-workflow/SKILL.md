@@ -1,7 +1,7 @@
 ---
-name: Github Workflow Debugger
-allowed-tools: "Read,Bash(gh:*)"
+name: gh-workflow
 description: How to fetch logs from Github's CI/CD with the gh cli
+allowed-tools: Read, Bash(gh:*)
 ---
 
 Github workflows found in `.github/workflows/` define critical CI/CD steps to

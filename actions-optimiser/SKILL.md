@@ -1,6 +1,5 @@
-
 ---
-name: Github actions optimiser
+name: actions-optimiser
 description: Steps for creating better Github actions by gathering context on how they are used
 ---
 
