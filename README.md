@@ -2,6 +2,10 @@ https://code.visualstudio.com/docs/copilot/customization/agent-skills
 
 ## Usage
 
+```
+npx skills add kaihendry/skills
+```
+
 To add skills from this repository to Claude Code:
 
 ```
