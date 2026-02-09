@@ -1,6 +1,7 @@
 ---
 name: actions-updater
 description: This skill should be used when the user asks to "update GitHub Actions", "check for action updates", "upgrade workflow actions", "update actions to latest version", "replace dependabot for actions", "check for outdated actions", or wants to find outdated GitHub Actions in workflow files and update them to the latest release versions.
+version: 0.1.0
 ---
 
 # GitHub Actions Version Updater

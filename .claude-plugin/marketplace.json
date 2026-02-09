@@ -16,7 +16,8 @@
       "strict": false,
       "skills": [
         "./skills/actions-optimiser",
-        "./skills/gh-workflow"
+        "./skills/actions-debugger",
+        "./skills/actions-updater"
       ]
     }
   ]
