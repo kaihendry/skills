@@ -17,7 +17,8 @@ jobs:
       - uses: astral-sh/setup-uv@v5
 
       - name: Run check_updates.py
-        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: uv run actions-updater/scripts/check_updates.py test-workflows/ci.yaml | tee /tmp/output.txt
 
       - name: Verify outdated actions detected
