@@ -30,7 +30,7 @@ jobs:
             Then update any outdated actions in the file following the version
             format rules from the actions-updater skill.
           claude_args: |
-            --allowedTools "Read,Edit,Bash(uv:*),Bash(gh:*),Bash(python*:*)"
+            --allowedTools "Read,Edit,Bash(uv:*),Bash(gh:*)"
           plugin_marketplaces: |
             https://github.com/kaihendry/skills.git
           plugins: |
