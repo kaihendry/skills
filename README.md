@@ -10,7 +10,8 @@ To add skills from this repository to Claude Code:
 
 ## Available Skills
 
-- **Github actions optimiser** - Steps for creating better Github actions by gathering context on how they are used
-- **Github Workflow Debugger** - How to fetch logs from Github's CI/CD with the gh cli
+- **actions-debugger** - Debug GitHub Actions workflow failures by fetching and analysing CI/CD logs via the gh CLI
+- **actions-optimiser** - Gather real-world usage context for GitHub Actions and recommend workflow improvements
+- **actions-updater** - Update GitHub Actions in workflow files to their latest released versions
 
 https://github.com/anthropics/claude-code/issues/9716
