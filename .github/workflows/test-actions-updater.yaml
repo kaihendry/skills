@@ -1,0 +1,41 @@
+name: Test actions-updater skill
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-updater:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download test workflow file
+        run: |
+          mkdir -p test-workflows
+          curl -sL "https://raw.githubusercontent.com/charliermarsh/autobot/e42c66659bf97b90ca9ff305a19cc99952d0d43f/.github/workflows/ci.yaml" -o test-workflows/ci.yaml
+          echo "--- Downloaded workflow ---"
+          cat test-workflows/ci.yaml
+
+      - name: Update actions with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Use the actions-updater skill to check for outdated GitHub Actions
+            in test-workflows/ci.yaml and update them.
+
+            Run: uv run actions-updater/scripts/check_updates.py test-workflows/ci.yaml
+
+            Then update any outdated actions in the file following the version
+            format rules from the actions-updater skill.
+
+            Show the final updated file.
+          claude_args: |
+            --allowedTools "Read,Edit,Bash(uv:*),Bash(gh:*),Bash(cat:*)"
+          plugin_marketplaces: |
+            https://github.com/kaihendry/skills.git
+          plugins: |
+            github-skills@hendry-skills
