@@ -16,8 +16,6 @@ jobs:
         run: |
           mkdir -p test-workflows
           curl -sL "https://raw.githubusercontent.com/charliermarsh/autobot/e42c66659bf97b90ca9ff305a19cc99952d0d43f/.github/workflows/ci.yaml" -o test-workflows/ci.yaml
-          echo "--- Downloaded workflow ---"
-          cat test-workflows/ci.yaml
 
       - name: Update actions with Claude
         uses: anthropics/claude-code-action@v1
@@ -31,11 +29,49 @@ jobs:
 
             Then update any outdated actions in the file following the version
             format rules from the actions-updater skill.
-
-            Show the final updated file.
           claude_args: |
-            --allowedTools "Read,Edit,Bash(uv:*),Bash(gh:*),Bash(cat:*)"
+            --allowedTools "Read,Edit,Bash(uv:*),Bash(gh:*),Bash(python*:*)"
           plugin_marketplaces: |
             https://github.com/kaihendry/skills.git
           plugins: |
             github-skills@hendry-skills
+
+      - name: Verify updates
+        run: |
+          echo "=== Verifying actions were updated ==="
+          PASS=0
+          FAIL=0
+
+          check() {
+            local label="$1" pattern="$2" file="test-workflows/ci.yaml"
+            if grep -qE "$pattern" "$file"; then
+              echo "PASS: $label"
+              PASS=$((PASS + 1))
+            else
+              echo "FAIL: $label"
+              grep "$3" "$file" || true
+              FAIL=$((FAIL + 1))
+            fi
+          }
+
+          check "actions/checkout updated from v3" \
+            "uses: actions/checkout@v[4-9]" \
+            "actions/checkout"
+
+          check "actions/setup-python updated from v4" \
+            "uses: actions/setup-python@v[5-9]" \
+            "actions/setup-python"
+
+          check "astral-sh/setup-uv updated from v1" \
+            "uses: astral-sh/setup-uv@v[2-9]" \
+            "astral-sh/setup-uv"
+
+          echo ""
+          echo "=== Results: $PASS passed, $FAIL failed ==="
+
+          if [ "$FAIL" -gt 0 ]; then
+            echo ""
+            echo "--- Updated file contents ---"
+            cat test-workflows/ci.yaml
+            exit 1
+          fi
