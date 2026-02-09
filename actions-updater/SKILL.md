@@ -13,9 +13,13 @@ Update GitHub Actions in workflow files to their latest released versions. This 
 
 Run the bundled script to parse all `uses:` lines and query each action's latest release:
 
-    uv run ${CLAUDE_PLUGIN_ROOT}/actions-updater/scripts/check_updates.py [path/to/.github/workflows]
+    uv run actions-updater/scripts/check_updates.py
 
-The script parses workflow YAML, recursively extracts all `uses: owner/repo@version` entries, queries `gh release view --repo owner/repo` for each, and outputs a comparison table. It skips local actions (`./...`) and Docker actions (`docker://...`).
+With no arguments, the script scans `.github/workflows/*.yml` and `*.yaml`. To check specific files:
+
+    uv run actions-updater/scripts/check_updates.py path/to/workflow.yaml
+
+The script parses workflow YAML, recursively extracts all `uses: owner/repo@version` entries, queries `gh release view --repo owner/repo` for each, and outputs a comparison table showing the current and latest major versions. It skips local actions (`./...`) and Docker actions (`docker://...`).
 
 ### Step 2: Update Workflow Files
 
@@ -36,6 +40,5 @@ Present a table of all updates applied, showing the action, old version, and new
 
 Check all workflow actions for available updates. Requires authenticated `gh` CLI.
 
-Usage: `uv run scripts/check_updates.py [workflow_dir]`
-
-Defaults to `.github/workflows` if no directory is specified.
+    uv run scripts/check_updates.py                      # scans .github/workflows/
+    uv run scripts/check_updates.py path/to/ci.yaml      # specific file(s)

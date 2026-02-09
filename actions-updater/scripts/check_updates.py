@@ -5,7 +5,10 @@
 # ///
 """Check GitHub Actions workflow files for available version updates.
 
-Usage: uv run check_updates.py [workflow_dir]
+Usage:
+  uv run check_updates.py                        # scans .github/workflows/*.yml/*.yaml
+  uv run check_updates.py path/to/workflow.yaml   # scans specific file(s)
+
 Requires: gh cli (authenticated)
 """
 
@@ -52,16 +55,23 @@ def get_latest_release(repo):
 
 
 def main():
-    workflow_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".github/workflows")
-
-    if not workflow_dir.is_dir():
-        print(f"Error: Directory not found: {workflow_dir}", file=sys.stderr)
-        sys.exit(1)
-
-    files = sorted(workflow_dir.glob("*.yml")) + sorted(workflow_dir.glob("*.yaml"))
-    if not files:
-        print(f"No workflow files found in {workflow_dir}", file=sys.stderr)
-        sys.exit(1)
+    if len(sys.argv) > 1:
+        # Specific files passed as arguments
+        files = [Path(f) for f in sys.argv[1:]]
+        for f in files:
+            if not f.is_file():
+                print(f"Error: File not found: {f}", file=sys.stderr)
+                sys.exit(1)
+    else:
+        # Default: scan .github/workflows/
+        workflow_dir = Path(".github/workflows")
+        if not workflow_dir.is_dir():
+            print(f"Error: Directory not found: {workflow_dir}", file=sys.stderr)
+            sys.exit(1)
+        files = sorted(workflow_dir.glob("*.yml")) + sorted(workflow_dir.glob("*.yaml"))
+        if not files:
+            print(f"No workflow files found in {workflow_dir}", file=sys.stderr)
+            sys.exit(1)
 
     print(f"Scanning: {', '.join(str(f) for f in files)}")
     print()
