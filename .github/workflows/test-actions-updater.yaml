@@ -1,7 +1,6 @@
 name: Test actions-updater skill
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:

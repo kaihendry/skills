@@ -1,0 +1,52 @@
+name: Test check_updates.py script
+
+on:
+  push:
+
+jobs:
+  test-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download test workflow file
+        run: |
+          mkdir -p test-workflows
+          curl -sL "https://raw.githubusercontent.com/charliermarsh/autobot/e42c66659bf97b90ca9ff305a19cc99952d0d43f/.github/workflows/ci.yaml" -o test-workflows/ci.yaml
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Run check_updates.py
+        id: check
+        run: uv run actions-updater/scripts/check_updates.py test-workflows/ci.yaml | tee /tmp/output.txt
+
+      - name: Verify outdated actions detected
+        run: |
+          echo "=== Verifying check_updates.py output ==="
+          PASS=0
+          FAIL=0
+
+          check() {
+            local label="$1" pattern="$2"
+            if grep -qE "$pattern" /tmp/output.txt; then
+              echo "PASS: $label"
+              PASS=$((PASS + 1))
+            else
+              echo "FAIL: $label"
+              FAIL=$((FAIL + 1))
+            fi
+          }
+
+          check "actions/checkout flagged as outdated" "actions/checkout.*UPDATE AVAILABLE"
+          check "actions/setup-python flagged as outdated" "actions/setup-python.*UPDATE AVAILABLE"
+          check "astral-sh/setup-uv flagged as outdated" "astral-sh/setup-uv.*UPDATE AVAILABLE"
+
+          echo ""
+          echo "=== Results: $PASS passed, $FAIL failed ==="
+
+          if [ "$FAIL" -gt 0 ]; then
+            echo ""
+            echo "--- Full script output ---"
+            cat /tmp/output.txt
+            exit 1
+          fi
