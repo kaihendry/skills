@@ -15,9 +15,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/actions-optimiser",
-        "./skills/actions-debugger",
-        "./skills/actions-updater"
+        "./actions-optimiser",
+        "./actions-debugger",
+        "./actions-updater"
       ]
     }
   ]
