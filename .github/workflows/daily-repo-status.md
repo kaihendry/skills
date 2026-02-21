@@ -21,6 +21,7 @@ tools:
 
 safe-outputs:
   create-issue:
+    close-older-issues: true
     title-prefix: "[repo-status] "
     labels: [report, daily-status]
 source: githubnext/agentics/workflows/daily-repo-status.md@e43596e069e74a65cd7d93315091672d278c2642
