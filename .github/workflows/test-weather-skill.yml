@@ -14,11 +14,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run weather skill for Bodmin, Cornwall
-        uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: "Use the meteoblue weather skill (weather/SKILL.md) to get the forecast for Bodmin, Cornwall."
-          claude_args: "--allowedTools Bash(curl:*)"
+      - uses: actions/setup-node@v4
+
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Show available tools
         env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        run: copilot --help || true
+
+      - name: Run weather skill for Bodmin, Cornwall
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          copilot \
+            --allow-tool=shell \
+            --allow-tool=fetch \
+            --no-ask-user \
+            -p "Use the meteoblue weather skill in weather/SKILL.md to get the forecast for Bodmin, Cornwall. The METEOBLUE_API_KEY environment variable is already set. Do not use wttr.in or any other weather service."
