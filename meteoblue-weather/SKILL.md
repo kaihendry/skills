@@ -38,14 +38,6 @@ For each place, fetch the **basic-day** package:
 curl -s "https://my.meteoblue.com/packages/basic-day?lat=LAT&lon=LON&name=PLACE_NAME&tz=Europe%2FLondon&apikey=$METEOBLUE_API_KEY"
 ```
 
-`basic-day` returns exactly 7 days starting from today (indices 0–6). If the target date falls on day 7 or beyond, use the **basic-1h_3h** package instead, which covers the same period in 1-hour and 3-hour steps and can be aggregated to daily:
-
-```bash
-curl -s "https://my.meteoblue.com/packages/basic-1h_3h?lat=LAT&lon=LON&name=PLACE_NAME&tz=Europe%2FLondon&apikey=$METEOBLUE_API_KEY"
-```
-
-Do not fetch any external documentation. Do not try any other packages.
-
 ### 5. Fetch meteogram images (Image API)
 
 For each place, download the **standard meteogram**:
@@ -72,18 +64,7 @@ Display inline with the read tool.
 
 Detect the user's time intent (e.g. "today", "this weekend", "next week"). If unspecified, summarise the next 3 days.
 
-The **basic-day** response contains `data_day` with these arrays (one value per day, indexed from `time`):
-
-| Field | Meaning |
-|-------|---------|
-| `temperature_max` / `temperature_min` | °C high/low |
-| `precipitation` | mm total |
-| `precipitation_probability` | % chance of rain |
-| `windspeed_mean` | km/h average |
-| `uvindex` | UV index |
-| `pictocode` | WMO weather symbol (1=sunny, 4=cloudy, 10=rain, etc.) |
-
-Do not fetch external documentation — interpret fields from the above table.
+Interpret the JSON response fields directly — refer to the [Forecast API docs](https://docs.meteoblue.com/en/weather-apis/forecast-api/overview) and [Image API docs](https://docs.meteoblue.com/en/weather-apis/images-api/overview) for field definitions if needed.
 
 ### 7. Compare (if multiple places)
 
