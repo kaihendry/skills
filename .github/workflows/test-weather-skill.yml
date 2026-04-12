@@ -32,7 +32,7 @@ jobs:
           copilot \
             --allow-tool=shell \
             --allow-tool=fetch \
-            --allow-url=meteoblue.com \
+            --allow-url=my.meteoblue.com \
             --allow-url=nominatim.openstreetmap.org \
             --no-ask-user \
             -p "Use the meteoblue weather skill in weather/SKILL.md to get the forecast for Bodmin, Cornwall. The METEOBLUE_API_KEY environment variable is already set."
