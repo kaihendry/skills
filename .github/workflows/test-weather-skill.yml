@@ -10,7 +10,7 @@ jobs:
   test-weather:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -35,4 +35,28 @@ jobs:
             --allow-url=my.meteoblue.com \
             --allow-url=nominatim.openstreetmap.org \
             --no-ask-user \
-            -p "Use the meteoblue weather skill in weather/SKILL.md to get the forecast for Bodmin, Cornwall. The METEOBLUE_API_KEY environment variable is already set."
+            -p "Use the meteoblue weather skill in weather/SKILL.md to get the forecast for Bodmin, Cornwall. The METEOBLUE_API_KEY environment variable is already set. Save the meteogram image to /tmp/bodmin_meteogram.png"
+
+      - name: Publish meteogram to GitHub Release and write summary
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Ensure the tag/release exists
+          gh release view weather-meteograms --repo ${{ github.repository }} \
+            || gh release create weather-meteograms \
+               --repo ${{ github.repository }} \
+               --prerelease \
+               --title "Weather Meteograms" \
+               --notes "Latest meteogram images from CI runs."
+
+          # Upload (overwrite) the PNG
+          if [ -f /tmp/bodmin_meteogram.png ]; then
+            gh release upload weather-meteograms /tmp/bodmin_meteogram.png \
+              --repo ${{ github.repository }} --clobber
+            URL="https://github.com/${{ github.repository }}/releases/download/weather-meteograms/bodmin_meteogram.png"
+            echo "## Bodmin, Cornwall — Meteogram" >> $GITHUB_STEP_SUMMARY
+            echo "![Bodmin meteogram]($URL)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No meteogram PNG found at /tmp/bodmin_meteogram.png" >> $GITHUB_STEP_SUMMARY
+          fi
