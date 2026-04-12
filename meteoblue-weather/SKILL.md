@@ -64,7 +64,18 @@ Display inline with the read tool.
 
 Detect the user's time intent (e.g. "today", "this weekend", "next week"). If unspecified, summarise the next 3 days.
 
-Interpret the JSON response fields directly — refer to the [Forecast API docs](https://docs.meteoblue.com/en/weather-apis/forecast-api/overview) and [Image API docs](https://docs.meteoblue.com/en/weather-apis/images-api/overview) for field definitions if needed.
+The **basic-day** response contains `data_day` with these arrays (one value per day, indexed from `time`):
+
+| Field | Meaning |
+|-------|---------|
+| `temperature_max` / `temperature_min` | °C high/low |
+| `precipitation` | mm total |
+| `precipitation_probability` | % chance of rain |
+| `windspeed_mean` | km/h average |
+| `uvindex` | UV index |
+| `pictocode` | WMO weather symbol (1=sunny, 4=cloudy, 10=rain, etc.) |
+
+Do not fetch external documentation — interpret fields from the above table.
 
 ### 7. Compare (if multiple places)
 
