@@ -1,0 +1,27 @@
+name: Test Weather Skill
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'weather/SKILL.md'
+
+jobs:
+  test-weather:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Run weather skill for Bodmin, Cornwall
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+          METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
+        run: |
+          copilot -p "What is the weather forecast for Bodmin, Cornwall?" \
+            --allow-tool='shell(curl:*)' \
+            --no-ask-user
