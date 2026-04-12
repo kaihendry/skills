@@ -19,12 +19,17 @@ jobs:
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
-      - name: Show available tools
-        env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
-        run: copilot --help || true
+      - name: Calculate next weekend dates
+        id: weekend
+        run: |
+          # Find the next Saturday from today
+          SAT=$(date -d "next saturday" +"%d %B %Y" 2>/dev/null || date -v+sat +"%d %B %Y")
+          SUN=$(date -d "next sunday" +"%d %B %Y" 2>/dev/null || date -v+sun +"%d %B %Y")
+          echo "saturday=$SAT" >> $GITHUB_OUTPUT
+          echo "sunday=$SUN" >> $GITHUB_OUTPUT
+          echo "Next weekend: $SAT and $SUN"
 
-      - name: Run weather skill for Bodmin, Cornwall
+      - name: Run weather skill for Polkerris vs Polzeath
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
@@ -35,4 +40,4 @@ jobs:
             --allow-url=my.meteoblue.com \
             --allow-url=nominatim.openstreetmap.org \
             --no-ask-user \
-            -p "Use the meteoblue weather skill in weather/SKILL.md to compare the weather for Polkerris and Polzeath, Cornwall over the weekend of 18th and 19th April 2025. The METEOBLUE_API_KEY environment variable is already set. Both are coastal spots — fetch the surf meteogram for each too. Give a clear verdict on which is the better destination for a family day out, and whether Saturday or Sunday is the better day."
+            -p "Use the meteoblue weather skill in weather/SKILL.md to compare the weather for Polkerris and Polzeath, Cornwall over the weekend of ${{ steps.weekend.outputs.saturday }} and ${{ steps.weekend.outputs.sunday }}. The METEOBLUE_API_KEY environment variable is already set. Both are coastal spots — fetch the surf meteogram for each too. Give a clear verdict on which is the better destination for a family day out, and whether Saturday or Sunday is the better day."
