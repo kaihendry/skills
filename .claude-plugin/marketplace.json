@@ -17,7 +17,8 @@
       "skills": [
         "./actions-optimiser",
         "./actions-debugger",
-        "./actions-updater"
+        "./actions-updater",
+        "./weather"
       ]
     }
   ]
