@@ -14,7 +14,7 @@ jobs:
           mkdir -p test-workflows
           curl -sL "https://raw.githubusercontent.com/charliermarsh/autobot/e42c66659bf97b90ca9ff305a19cc99952d0d43f/.github/workflows/ci.yaml" -o test-workflows/ci.yaml
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v8
 
       - name: Run check_updates.py
         env:
