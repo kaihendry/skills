@@ -22,6 +22,7 @@ jobs:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
         run: |
-          copilot -p "What is the weather forecast for Bodmin, Cornwall?" \
+          copilot -p "Use the meteoblue weather skill to get the forecast for Bodmin, Cornwall." \
+            --allow-tool='web_fetch' \
             --allow-tool='shell(curl:*)' \
             --no-ask-user
