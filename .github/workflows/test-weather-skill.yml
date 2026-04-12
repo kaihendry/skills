@@ -9,20 +9,16 @@ on:
 jobs:
   test-weather:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-
-      - name: Install Copilot CLI
-        run: npm install -g @github/copilot
-
       - name: Run weather skill for Bodmin, Cornwall
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "Use the meteoblue weather skill (weather/SKILL.md) to get the forecast for Bodmin, Cornwall."
+          claude_args: "--allowedTools Bash(curl:*)"
         env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
           METEOBLUE_API_KEY: ${{ secrets.METEOBLUE_API_KEY }}
-        run: |
-          copilot -p "Use the meteoblue weather skill to get the forecast for Bodmin, Cornwall." \
-            --allow-tool='web_fetch' \
-            --allow-tool='shell(curl:*)' \
-            --no-ask-user
