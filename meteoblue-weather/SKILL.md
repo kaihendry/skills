@@ -32,11 +32,13 @@ Extract `lat` and `lon` from the first result. If empty, tell the user and ask t
 
 ### 4. Fetch weather forecasts (Forecast API)
 
-For each place, fetch the **basic-day** package:
+For each place, fetch the **basic-day** package with a 14-day window:
 
 ```bash
-curl -s "https://my.meteoblue.com/packages/basic-day?lat=LAT&lon=LON&name=PLACE_NAME&tz=Europe%2FLondon&apikey=$METEOBLUE_API_KEY"
+curl -s "https://my.meteoblue.com/packages/basic-day?lat=LAT&lon=LON&name=PLACE_NAME&tz=Europe%2FLondon&forecast_days=14&apikey=$METEOBLUE_API_KEY"
 ```
+
+`basic-day` returns up to 14 days when `forecast_days=14` is set. Do not try other packages or fetch documentation if a date appears missing — it will be present with this parameter.
 
 ### 5. Fetch meteogram images (Image API)
 
