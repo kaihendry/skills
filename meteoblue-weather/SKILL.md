@@ -1,6 +1,6 @@
 ---
 name: meteoblue
-description: Get weather forecasts for one or more places using the free Meteoblue Forecast & Image APIs. Use this skill for any weather-related question — a single location forecast, comparing two places, weekend plans, surf conditions, or anything involving weather. Triggers on prompts like "weather in Polzeath", "what's the forecast for Exeter?", "which has better weather, X or Y?", etc.
+description: Weather forecasts using the free Meteoblue Forecast & Image APIs (Meteograms). Use this skill for any weather-related question — a single location forecast, comparing two places, weekend plans, surf conditions, or anything involving weather. Triggers on prompts like "weather in Polzeath", "what's the forecast for Exeter?", "which has better weather, X or Y?", etc.
 ---
 
 # Meteoblue Weather (Forecast & Image API)
