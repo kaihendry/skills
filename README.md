@@ -14,7 +14,6 @@ To add skills from this repository to Claude Code:
 
 ## Available Skills
 
-- **actions-debugger** - Debug GitHub Actions workflow failures by fetching and analysing CI/CD logs via the gh CLI
 - **actions-optimiser** - Gather real-world usage context for GitHub Actions and recommend workflow improvements
 - **actions-updater** - Update GitHub Actions in workflow files to their latest released versions
 - **meteoblue-weather** - Get weather forecasts and meteogram images for one or more places using the Meteoblue API (requires `METEOBLUE_API_KEY`)
