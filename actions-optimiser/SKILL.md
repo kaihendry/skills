@@ -1,35 +1,38 @@
 ---
 name: actions-optimiser
-description: This skill should be used when the user asks to "optimise GitHub Actions", "improve my workflow", "make actions better", "review workflow usage", "how are others using this action", "find best practices for GitHub Actions", or wants to gather real-world context on how GitHub Actions are used to improve their workflows.
-version: 0.1.0
+description: Use when the user wants to optimise or review a GitHub Actions workflow file (.github/workflows/*.yml), find real-world examples of how a specific action like `hashicorp/setup-terraform` is used in other repos, or compare their workflow against community patterns. Triggers on "optimise this workflow", "how do others use <action>", "review my GitHub Actions", "find examples of <action>". Not for non-GitHub CI (CircleCI, GitLab CI, etc.).
+version: 0.2.0
 ---
 
 # GitHub Actions Optimiser
 
-Gather real-world usage context for GitHub Actions and recommend improvements to workflow files.
+Mine real-world usage of a specific GitHub Action across public repos to inform optimisations to a workflow file.
 
-## Process
+## The technique
 
-### Step 1: Search for How an Action Is Used
+When a workflow uses an action like `uses: hashicorp/setup-terraform@v3`, search public repos for working examples and decode them in parallel:
 
-When a GitHub workflow in `.github/workflows/` uses an action such as:
+### 1. Find candidate workflows
 
-    uses: hashicorp/setup-terraform@v3
+```bash
+gh search code "setup-terraform path:.github/workflows" --limit 20
+```
 
-Search for real-world usage with the pre-installed `gh` CLI:
+### 2. Pull at least 5 in parallel and decode
 
-    gh search code "setup-terraform path:.github/workflows"
+The contents API returns base64-encoded YAML — decode in one pipeline:
 
-### Step 2: View Search Results with Context
+```bash
+gh api repos/Sofiane-Truman/cloud-foundation-fabric/contents/.github/workflows/linting.yml \
+  | jq -r '.content' | base64 -d
+```
 
-Use the pattern `/repos/{owner}/{repo}/contents/{path}` to look up at least five results in parallel. For example:
+Run several of these concurrently (one per candidate repo) so a survey takes one round-trip, not five.
 
-    gh api repos/Sofiane-Truman/cloud-foundation-fabric/contents/.github/workflows/linting.yml | jq -r '.content' | base64 -d | less
+### 3. Identify patterns worth borrowing
 
-### Step 3: Check Authoritative Usage
+Look for: non-default inputs that recur across repos, caching setups, matrix patterns, version pins, permissions blocks, conditional steps. Single-occurrence quirks are noise; patterns repeated across 3+ unrelated repos are signal.
 
-Given the earlier example of `hashicorp/setup-terraform@v3`, the canonical source repository is `https://github.com/hashicorp/setup-terraform`. Study the README.md for official guidance.
+### 4. Apply
 
-### Step 4: Plan Optimisations
-
-Identify how the GitHub workflow can be improved. Prefer the latest version of actions and keep to defaults where possible. Find and explore novel yet succinct usages from the GitHub search results.
+Edit the user's workflow file to incorporate the patterns. Cite the source repo for any non-trivial change so the user can verify context.
