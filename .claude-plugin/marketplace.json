@@ -16,7 +16,6 @@
       "strict": false,
       "skills": [
         "./actions-optimiser",
-        "./actions-debugger",
         "./actions-updater",
         "./meteoblue-weather",
         "./uk-highways-agency"
