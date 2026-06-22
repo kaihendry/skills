@@ -1,6 +1,6 @@
 ---
 name: actions-updater
-description: Use when the user wants to update, upgrade, or bump GitHub Actions in workflow files to their latest released versions, check for outdated actions, or run this as a Dependabot replacement for `package-ecosystem: "github-actions"`. Triggers on "update GitHub Actions", "bump actions versions", "check for action updates", "upgrade workflow actions", "find outdated actions". Only for GitHub Actions `uses:` pins — not npm, pip, or other ecosystems.
+description: 'Use when the user wants to update, upgrade, or bump GitHub Actions in workflow files to their latest released versions, check for outdated actions, or run this as a Dependabot replacement for Dependabot''s github-actions package ecosystem. Triggers on "update GitHub Actions", "bump actions versions", "check for action updates", "upgrade workflow actions", "find outdated actions". Only for GitHub Actions `uses:` pins — not npm, pip, or other ecosystems.'
 version: 0.2.0
 ---
 
